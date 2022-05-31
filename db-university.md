@@ -19,19 +19,23 @@ Modellizzare la struttura di una tabella per memorizzare tutti i dati riguardant
 id:                                                           BIGINT PRIMARY KEY, UNIQUE, AUTO_INCREMENT, NOTNULL
 name: (Dipartimento Ingegneria, Dipartimento Biologia...)     VARCHAR(100) NOTNULL, INDEX
 city_venue:  (Napoli, Roma)                                   VARCHAR(50)  NULL
+website:   (department-website)                               VARCHAR(255)  NOTNULL
+language:  (language)                                         DEFAULT(it-IT) NOTNULL
 address_venue: (via barbagianni, 2)                           VARCHAR(50)  NULL
 
-## Degree_course
+## Degree_courses
 id:                                                            BIGINT PRIMARY KEY, UNIQUE, AUTO_INCREMENT, NOTNULL
 name: (Cdl Biologia della fecondazione, Ingegneria Biomedica)  VARCHAR(100) NOTNULL, INDEX
-department_id:                                                 BIGINT     NOTNULL
+degree_description:                                            MEDIUMTEXT   NULL
+department_id:                                                 BIGINT       NOTNULL
 
 ## Courses
 id:                                                            BIGINT PRIMARY KEY, UNIQUE, AUTO_INCREMENT, NOTNULL
 name: (Biochimica, Genetica, Zoologia)                         VARCHAR(50)  NOTNULL, INDEX
-exams: (Biochimica I, Biochimica II)                           VARCHAR(50)  NOTNULL, INDEX
-credits: (CFU)                                                 SMALLINT     NULL
-exam_appeal_id:                                                BIGINT       NOTNULL
+exams_modules: (Biochimica I, Biochimica II)                   VARCHAR(50)  NOTNULL, INDEX
+description: (course description)                              MEDIUMTEXT   NULL
+credits: (CFU)                                                 TINYINT      NULL
+degree_courses_id:                                               BIGINT  NOTNULL
 
 ## Teachers
 id:                                                             BIGINT PRIMARY KEY, UNIQUE, AUTO_INCREMENT, NOTNULL
@@ -39,19 +43,25 @@ name: (teacher_name)                                            VARCHAR(50) NOTN
 lastname: (teacher_lastname)                                    VARCHAR(50) NOTNULL, INDEX
 email: (teacher_email)                                          VARCHAR(50) NOTNULL
 qualification: (type_of_teacher)                                VARCHAR(50) NOTNULL
+course_id:                                                      BIGINT      NOTNULL
 
 ## Examp_appeals
 id:                                                             BIGINT PRIMARY KEY, UNIQUE, AUTO_INCREMENT, NOTNULL
-exames_date: (date of exams)                                    DATE    NULL
-student_grade:                                                  TINYINT     NULL
-teacher_id                                                      BIGINT       NOTNULL
-student_id                                                      BIGINT       NOTNULL
+exams_date: (date of exams)                                     DATE    NULL
+exams_note: (notes about exams)                                 TEXT    NULL
+student_grade:                                                  TINYINT NULL
+teacher_id :                                                    BIGINT  NOTNULL
+student_id :                                                    BIGINT  NOTNULL
 
 ## Students
 id:                                                              BIGINT PRIMARY KEY, UNIQUE, AUTO_INCREMENT, NOTNULL
 name: (student_name)                                             VARCHAR(50) NOTNULL, INDEX
 lastname: (student_lastname)                                     VARCHAR(50) NOTNULL, INDEX
-university_code:                                                 VARCHAR(50) NOTNULL, INDEX
-year_of_birth: (student_birth)                                   YEAR        NOTNULL
+university_code:                                                 VARCHAR(50) NOTNULL, INDEX, UNIQUE, AUTO_INCREMENT
+year_of_birth: (student_birth)                                   DATE        NOTNULL
+year_of_subscription: (university_subscription)                  DATE        NOTNULL
 email: (student_email)                                           VARCHAR(50) NOTNULL
 telephone_number: (student_telephone)                            SMALLINT    NULL
+student_credits: (CFU)                                           SMALLINT    NULL
+exams_done:                                                      TINYINT     NULL
+exams_to_do:                                                     TINYINT     NULL                                                        
