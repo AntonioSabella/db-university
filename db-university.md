@@ -45,10 +45,10 @@ email: (teacher_email)                                          VARCHAR(50) NOTN
 qualification: (type_of_teacher)                                VARCHAR(50) NOTNULL
 course_id:                                                      BIGINT      NOTNULL
 
-## Examp_appeals
+## Exam_appeals
 id:                                                             BIGINT PRIMARY KEY, UNIQUE, AUTO_INCREMENT, NOTNULL
-exams_date: (date of exams)                                     DATE    NULL
-exams_note: (notes about exams)                                 TEXT    NULL
+exam_date: (date of exams)                                     DATE    NULL
+exam_note: (notes about exams)                                 TEXT    NULL
 student_grade:                                                  TINYINT NULL
 teacher_id :                                                    BIGINT  NOTNULL
 student_id :                                                    BIGINT  NOTNULL
