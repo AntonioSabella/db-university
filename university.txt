@@ -28,8 +28,11 @@ SELECT Count(id) AS `CoursesCfu` FROM `courses` WHERE `cfu` > 10;
 3.
 SHOW tables;
 DESCRIBE `students`;
+// soluzione migliore:
+SELECT * FROM `students` WHERE TIMESTAMPDIFF(YEAR, date_of_birth, NOW()) > 30;
+// soluzione "fallata" valida solo per quest'anno...
 SELECT * FROM `students` WHERE YEAR(date_of_birth) < 1992;
-SELECT Count(id) AS `MajorStudents` FROM `students` WHERE `date_of_birth` < 1992;
+SELECT Count(id) AS `MajorStudents` FROM `students` WHERE YEAR(date_of_birth) < 1992;
 
 4.
 SHOW tables;
