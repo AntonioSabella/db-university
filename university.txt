@@ -15,14 +15,14 @@ Query da eseguire:
 
 1.
 SHOW tables;
-DESCRIBE students;
+DESCRIBE `students`;
 SELECT * FROM `students` WHERE YEAR(date_of_birth) = 1990;
 SELECT Count(id) AS `StudentsNumber` FROM `students` WHERE YEAR(date_of_birth) = 1990;
 
 2.
 SHOW tables;
-DESCRIBE students;
- SELECT * FROM `courses` WHERE `cfu` > 10;
+DESCRIBE `courses`;
+SELECT * FROM `courses` WHERE `cfu` > 10;
 SELECT Count(id) AS `CoursesCfu` FROM `courses` WHERE `cfu` > 10;
 
 3.
