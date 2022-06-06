@@ -21,3 +21,60 @@ GROUP BY `exam_id`;
 4.SELECT `department_id`, COUNT(id) AS `number_of_courses`
 FROM `degrees`
 GROUP BY `department_id`;
+
+QUERY JOINS:
+1. Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia
+2. Selezionare tutti i Corsi di Laurea Magistrale del Dipartimento di Neuroscienze
+3. Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
+4. Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui sono iscritti e il relativo dipartimento, in ordine alfabetico per cognome e nome
+5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
+6. Selezionare tutti i docenti che insegnano nel Dipartimento di Matematica (54)
+7. BONUS: Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per superare ciascuno dei suoi esami
+
+Soluzioni:
+
+1. SELECT `degrees`.`name`,`students`.`id`, `students`.`name`, `students`.`surname` 
+FROM `students`
+JOIN `degrees` 
+ON `students`.`degree_id` = `degrees`.`id` 
+WHERE `degrees`.`name` = 'Corso di Laurea in Economia';
+
+2. SELECT `degrees`.`id` AS `degree_id`, `degrees`.`name`AS `degree_name`, `degrees`.`level` AS `degree_level`
+FROM `degrees`
+JOIN `departments` ON `degrees`.`department_id` = `departments`.`id`
+WHERE `departments`.`name` = 'Dipartimento di Neuroscienze' AND `degrees`.`level`= 'magistrale';
+
+3. SELECT `courses`.`id` AS `course_id`, `courses`.`name` AS `course_name`
+FROM `courses`
+JOIN `course_teacher` ON `courses`.`id` = `course_teacher`.`course_id`
+WHERE `course_teacher`.`teacher_id` = 44;
+
+4 SELECT `students`.`id`, `students`.`name` AS `student_name`, `students`.`surname` AS `student_surname`, `degrees`.`name` AS `degree_name`, `departments`.`name` AS `department_name`
+FROM `students` 
+JOIN `degrees` ON `degrees`.`id` = `students`.`degree_id`
+JOIN `departments` ON `departments`.`id` = `department_id` 
+ORDER BY `student_name` ASC, `student_surname` ASC;
+
+5. SELECT `degrees`.`name` AS `degree_name`, `courses`.`name` AS `course_name` , CONCAT(`teachers`.`name`, ' ', `teachers`.`surname`) AS `teacher_fullname`
+FROM `degrees` 
+JOIN `courses` ON `degrees`.`id` =  `degree_id`
+JOIN `course_teacher` ON `courses`.`id` = `course_id`
+JOIN `teachers` ON `teacher_id` = `teachers`.`id`
+ORDER BY `degrees`.`id` ASC;
+
+6. SELECT DISTINCT `teachers`.*, `departments`.`name` AS `department_name`
+FROM `teachers`
+JOIN `course_teacher` ON `teachers`.`id` = `teacher_id`
+JOIN `courses` ON `course_id` = `courses`.`id`
+JOIN `degrees` ON `degree_id` = `degrees`.`id`
+JOIN `departments` ON `department_id` = `departments`.`id` 
+WHERE `departments`.`name` = 'Dipartimento di Matematica';
+
+(¨¨BONUS¨¨)
+7. SELECT `students`.`id` AS `student_id`, CONCAT(`students`.`name`, ' ', `students`.`surname`) AS `student_fullname`, `courses`.`name` AS `course_name`, COUNT(`exams`.`id`) AS `student_attempts`
+FROM `students`
+JOIN `exam_student` ON `students`.`id` = `student_id`
+JOIN `exams` ON `exam_id` = `exams`.`id` 
+JOIN `courses` ON `course_id` = `courses`.`id`
+GROUP BY `courses`.`id`, `students`.`id`
+ORDER BY `student_fullname` ASC, `students`.`id` ASC;
